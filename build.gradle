@@ -1,0 +1,32 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        jcenter()
+        maven { url 'C:/Users/admin/.m2/repository' }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'org.aspectj:aspectjtools:1.8.13'
+        classpath 'com.eebbk.aoptools:aop-tools-plugin:1.0.0'
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        maven { url 'C:/Users/admin/.m2/repository' }
+    }
+}
+
+ext {
+    compileSdkVersion = 23
+    buildToolsVersion = '25.0.2'
+    aopToolsVersion = '1.0.0'
+    repositoryUrl = "file://C://Users/admin/.m2/repository"
+//    repositoryUrl = "http://172.28.1.147:8081/nexus/content/repositories/thirdparty-snapshot/"
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

@@ -1,0 +1,73 @@
+import org.aspectj.bridge.IMessage
+import org.aspectj.bridge.MessageHandler
+import org.aspectj.tools.ajc.Main
+
+apply plugin: 'com.android.library'
+apply plugin: 'maven'//maven插件，用于上传插件到仓库
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+}
+
+dependencies {
+    compile 'org.aspectj:aspectjrt:1.8.13'
+    compile 'com.eebbk.aoptools:aop-tools-annotation:1.0.0'
+    testCompile 'junit:junit:4.12'
+}
+
+uploadArchives{
+    repositories.mavenDeployer{
+        // 本地仓库路径
+        repository(url:rootProject.ext.repositoryUrl){
+            authentication(userName: 'admin', password: 'admin123')
+        }
+        // 唯一标识
+        pom.groupId = "com.eebbk.aoptools"
+        // 项目名称
+        pom.artifactId = "aop-tools-runtime"
+        // 版本号
+        pom.version = rootProject.ext.aopToolsVersion
+    }
+}
+
+android.libraryVariants.all { variant ->
+    JavaCompile javaCompile = variant.javaCompile
+    javaCompile.doLast {
+        String[] args = [
+                "-showWeaveInfo",
+                "-1.5",
+                "-inpath", javaCompile.destinationDir.toString(),
+                "-aspectpath", javaCompile.classpath.asPath,
+                "-d", javaCompile.destinationDir.toString(),
+                "-classpath", javaCompile.classpath.asPath,
+                "-bootclasspath", android.bootClasspath.join(File.pathSeparator)
+        ]
+
+        MessageHandler handler = new MessageHandler(true);
+        new Main().run(args, handler)
+
+        def log = project.logger
+        for (IMessage message : handler.getMessages(null, true)) {
+            switch (message.getKind()) {
+                case IMessage.ABORT:
+                case IMessage.ERROR:
+                case IMessage.FAIL:
+                    log.error message.message, message.thrown
+                    break;
+                case IMessage.WARNING:
+                case IMessage.INFO:
+                    log.info message.message, message.thrown
+                    break;
+                case IMessage.DEBUG:
+                    log.debug message.message, message.thrown
+                    break;
+            }
+        }
+    }
+}

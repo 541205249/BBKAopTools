@@ -1,0 +1,24 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+
+uploadArchives{
+    repositories.mavenDeployer{
+        // 本地仓库路径
+        repository(url:rootProject.ext.repositoryUrl){
+            authentication(userName: 'admin', password: 'admin123')
+        }
+        // 唯一标识
+        pom.groupId = "com.eebbk.aoptools"
+        // 项目名称
+        pom.artifactId = "aop-tools-annotation"
+        // 版本号
+        pom.version = rootProject.ext.aopToolsVersion
+    }
+}

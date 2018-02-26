@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/BBKAopTools.iml" filepath="$PROJECT_DIR$/.idea/BBKAopTools.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aop-tools-annotation/aop-tools-annotation.iml" filepath="$PROJECT_DIR$/aop-tools-annotation/aop-tools-annotation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aop-tools-plugin/aop-tools-plugin.iml" filepath="$PROJECT_DIR$/aop-tools-plugin/aop-tools-plugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aop-tools-runtime/aop-tools-runtime.iml" filepath="$PROJECT_DIR$/aop-tools-runtime/aop-tools-runtime.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+    </modules>
+  </component>
+</project>

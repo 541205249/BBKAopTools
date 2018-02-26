@@ -1,0 +1,29 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'//maven插件，用于上传插件到仓库
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+
+//uploadArchives 类型是upload，这个task不是'maven'创建的
+//而是'maven'定义了一个rule,而后由我们自己创建的，关于rule，请看后面内容
+// 上传到本地代码库
+uploadArchives{
+    repositories{
+        mavenDeployer{
+            repository(url:rootProject.ext.repositoryUrl){
+                authentication(userName: 'admin', password: 'admin123')
+            }
+            pom.groupId = 'com.eebbk.aoptools' // 组名
+            pom.artifactId = 'aop-tools-plugin' // 插件名
+            pom.version = rootProject.ext.aopToolsVersion // 版本号
+        }
+    }
+}
+dependencies {
+    //导入Gradle的api，要写插件，肯定要使用Gradle的api
+    compile gradleApi()
+    compile localGroovy()
+    compile 'com.android.tools.build:gradle:2.3.3'
+    compile 'org.aspectj:aspectjtools:1.8.13'
+    compile 'org.aspectj:aspectjrt:1.8.13'
+}
