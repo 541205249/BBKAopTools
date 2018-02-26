@@ -18,7 +18,6 @@ android {
 dependencies {
     compile 'org.aspectj:aspectjrt:1.8.13'
     compile 'com.eebbk.aoptools:aop-tools-annotation:1.0.0'
-    testCompile 'junit:junit:4.12'
 }
 
 uploadArchives{

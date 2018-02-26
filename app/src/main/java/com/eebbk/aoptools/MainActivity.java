@@ -2,7 +2,6 @@ package com.eebbk.aoptools;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 
@@ -16,7 +15,7 @@ import java.util.Random;
 
 public class MainActivity extends Activity implements View.OnClickListener{
 	@Override
-	protected void onCreate(@Nullable Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_activity);
 		findViewById(R.id.click1).setOnClickListener(this);
