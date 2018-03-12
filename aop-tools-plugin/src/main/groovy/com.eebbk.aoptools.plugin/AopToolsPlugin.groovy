@@ -36,12 +36,8 @@ class AopToolsPlugin implements Plugin<Project>{
         variants.all { variant ->
             if (!variant.buildType.isDebuggable()) {
                 log.debug("Skipping non-debuggable build type '${variant.buildType.name}'.")
-                return;
+                return
             }
-//            else if (!project.hugo.enabled) {
-//                log.debug("Hugo is not disabled.")
-//                return;
-//            }
 
             JavaCompile javaCompile = variant.javaCompile
             javaCompile.doLast {

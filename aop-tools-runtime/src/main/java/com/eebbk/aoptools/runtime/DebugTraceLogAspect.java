@@ -54,7 +54,7 @@ public class DebugTraceLogAspect {
 			traceInfoList.add(info);
 			traceMap.put(traceTag,traceInfoList);
 			builder.append(joinPoint.getSignature().getName());
-			Log.e(traceTag,toString());
+			Log.e(traceTag,builder.toString());
 		} else {
 			Object result = joinPoint.proceed();
 			StringBuilder builder = new StringBuilder("<--");

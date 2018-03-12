@@ -1,7 +1,5 @@
 package com.eebbk.aoptools.runtime;
 
-import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
 import org.aspectj.lang.JoinPoint;
@@ -12,18 +10,12 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.CodeSignature;
 
-import java.lang.reflect.Method;
-import java.util.Random;
-
 /**
  * DebugLogAspect
  */
 
 @Aspect
 public class DebugLogAspect {
-	private Context context;
-	private Intent intent;
-
 	private static final String POINTCUT_METHOD =
 			"execution(@com.eebbk.aoptools.annotations.DebugLog * *(..))";
 
@@ -38,21 +30,15 @@ public class DebugLogAspect {
 
 	@Around("methodAnnotatedWithDebugLog() || constructorAnnotatedDebugLog()")
 	public Object weaveJoinPoint(ProceedingJoinPoint joinPoint) throws Throwable {
-		if(context == null){
-			Class clz = Class.forName("android.app.ActivityThread");
-			Method method = clz.getMethod("currentApplication");
-			context = (Context) method.invoke(clz);
-		}
 		enterMethod(joinPoint);
 		long start = System.currentTimeMillis();
 		Object result = joinPoint.proceed();
 		long end = System.currentTimeMillis();
-		endMethod(joinPoint,end-start);
-		if(intent == null){
-			intent = new Intent("com.eebbk.test.aoptest");
-		}
-		intent.putExtra("test","method spend time"+ (end-start));
-		context.sendBroadcast(intent);
+		long timeDifference = end-start;
+		endMethod(joinPoint,timeDifference);
+
+		BroadcastUtils.sendA(timeDifference);
+
 		return result;
 	}
 
